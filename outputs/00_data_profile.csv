@@ -1,0 +1,18 @@
+metric,value
+"rows: orders",99441
+"rows: order_items",112650
+"rows: order_payments",103886
+"rows: order_reviews",99224
+"rows: customers",99441
+"rows: products",32951
+"rows: sellers",3095
+"rows: category_translation",73
+"delivered orders with a delivery date",96470
+"unique customers (customer_unique_id)",96096
+"orders with more than one review",547
+"delivered orders with more than one seller",1275
+"delivered orders spanning more than one category",780
+"items with no product category",1603
+"delivered orders reaching the customer before the carrier pickup date",23
+"delivered orders with a carrier pickup date before the purchase time",165
+"orders with no items",775

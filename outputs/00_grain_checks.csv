@@ -1,0 +1,14 @@
+check_name,used_in,expected,actual,passed
+"orders: one row per order_id",all,99441,99441,1
+"customers: one row per customer_id","02, 05",99441,99441,1
+"latest_review: one row per reviewed order","01, 02, 04",98673,98673,1
+"delivered LEFT JOIN latest_review keeps row count","01, 02",96470,96470,1
+"delivered JOIN customers keeps row count","02, 05",96470,96470,1
+"order_sellers: one row per order-seller pair",03,100010,100010,1
+"order_sellers covers every delivered order",03,96470,96470,1
+"order_categories LEFT JOIN latest_review keeps row count",04,97268,97268,1
+"order_categories revenue equals item-level revenue (BRL)",04,13220248.93,13220248.93,1
+"customer order counts sum to delivered orders",05,96470,96470,1
+"order_totals: one row per order","06, 07, 08",98666,98666,1
+"delivered JOIN order_totals keeps row count","06, 07, 08",96470,96470,1
+"every delivered order has a valid purchase timestamp",07,96470,96470,1

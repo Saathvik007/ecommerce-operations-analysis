@@ -1,0 +1,7 @@
+band_order,item_value_band_brl,orders,share_of_orders_pct,avg_item_value_brl,avg_freight_brl,freight_share_pct,share_of_all_freight_pct
+1,"Under 50",28790,29.8,31.84,15.4,32.6,20.2
+2,50-99,27726,28.7,75.45,19.14,20.2,24.1
+3,100-199,25307,26.2,143.68,24.94,14.8,28.7
+4,200-499,11147,11.6,297.92,35.12,10.5,17.8
+5,500+,3500,3.6,929.92,57.57,5.8,9.2
+6,"All orders",96470,100.0,137.04,22.79,14.3,100.0
