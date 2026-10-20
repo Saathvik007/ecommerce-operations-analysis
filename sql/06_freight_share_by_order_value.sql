@@ -1,9 +1,5 @@
--- 06. How large is freight as a share of what customers pay, by order size?
--- Scope: delivered orders with a delivery date. Order value = item prices + freight, in BRL.
--- Freight share = total freight / total order value within each band.
--- Grain: order_items (one row per item) is summed to one row per order before banding, so
--- each order lands in exactly one band. order_totals has 96,470 rows, one per delivered
--- order (see 00_grain_checks.sql).
+-- How much of what customers pay goes to freight, by order size? Order value here is item
+-- prices + freight in BRL, and the freight share is total freight / total order value per band.
 
 WITH delivered AS (
     SELECT order_id

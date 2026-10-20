@@ -1,9 +1,5 @@
--- 07. How did monthly orders, revenue and late-delivery rates move?
--- Scope: delivered orders with a delivery date, by purchase month, January 2017 to
--- August 2018. Months before 2017 have under 300 orders and the source has almost no
--- orders after August 2018, so both ends are left out.
--- Grain: order_totals sums items to one row per order before the monthly roll-up, so
--- each order is counted once (see 00_grain_checks.sql).
+-- Orders, revenue and late rate for each purchase month from January 2017 to August 2018.
+-- I left out 2016 (under 300 delivered orders) and the few orders after August 2018.
 
 WITH delivered AS (
     SELECT

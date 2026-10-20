@@ -1,9 +1,8 @@
--- 03. Which sellers drive late deliveries?
--- Scope: delivered orders with a delivery date; sellers with at least 50 delivered orders.
--- Grain: one row per order-seller pair. 1,275 delivered orders have items from more than
--- one seller; such an order counts once for each of its sellers, and lateness (an
--- order-level fact) is attributed to all of them. order_sellers has one row per pair, and
--- the join to delivered keeps every pair whose order is delivered (see 00_grain_checks.sql).
+-- Do a few sellers cause most of the late deliveries? I only list sellers with at least 50
+-- delivered orders.
+-- One row per order and seller. 1,275 delivered orders have items from more than one seller.
+-- Those orders count once for each seller, and if the order was late it counts as late for
+-- all of them (checked in 00_grain_checks.sql).
 
 WITH delivered AS (
     SELECT
@@ -16,8 +15,8 @@ WITH delivered AS (
       AND order_delivered_customer_date IS NOT NULL
 ),
 order_sellers AS (
-    -- Collapse items to one row per order and seller. The seller's deadline is the latest
-    -- shipping_limit_date across its items in the order.
+    -- One row per order and seller. If a seller has several items in the order, I use the
+    -- latest shipping_limit_date as that seller's deadline.
     SELECT order_id, seller_id, MAX(shipping_limit_date) AS shipping_limit
     FROM order_items
     GROUP BY order_id, seller_id
@@ -54,7 +53,7 @@ SELECT
     ROUND(100.0 * s.late_orders / s.delivered_orders, 1) AS late_rate_pct,
     ROUND(1.0 * s.late_orders / s.delivered_orders / t.platform_late_rate, 2) AS late_rate_vs_platform,
     ROUND(100.0 * s.shipped_after_limit_orders / s.delivered_orders, 1) AS shipped_after_limit_pct,
-    -- Shares are of late seller-orders, not late orders: a two-seller order counts twice.
+    -- This share is out of all late seller-orders, so a two-seller order counts twice.
     ROUND(100.0 * s.late_orders / t.all_late_seller_orders, 2) AS share_of_all_late_pct,
     -- Running share of all late seller-orders, worst late rate first.
     ROUND(100.0 * SUM(s.late_orders) OVER (

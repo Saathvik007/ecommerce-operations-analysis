@@ -1,12 +1,10 @@
--- 01. How much do late deliveries lower review scores?
--- Scope: delivered orders with a delivery date (96,470 orders).
--- Grain: one row per order throughout. latest_review is one row per order, so the
--- LEFT JOIN keeps 96,470 rows (see 00_grain_checks.sql).
+-- How much do late deliveries hurt review scores? I group delivered orders by how many
+-- days late they arrived and look at the average review in each group.
 
 WITH delivered AS (
     SELECT
         order_id,
-        -- Dates only: the estimated date has no time of day, so delivery on that day counts as on time.
+        -- I compare dates only. The estimated date has no time of day, so arriving on that day counts as on time.
         CAST(julianday(date(order_delivered_customer_date))
              - julianday(date(order_estimated_delivery_date)) AS INTEGER) AS days_vs_estimate
     FROM orders
@@ -14,7 +12,7 @@ WITH delivered AS (
       AND order_delivered_customer_date IS NOT NULL
 ),
 latest_review AS (
-    -- 547 orders have more than one review. Keep the most recent one per order.
+    -- 547 orders have more than one review, so I keep the most recent one for each order.
     SELECT order_id, review_score
     FROM (
         SELECT order_id, review_score,
@@ -65,7 +63,7 @@ GROUP BY bucket_order, delay_bucket
 
 UNION ALL
 
--- Roll-up rows so the on-time vs late comparison is in the output directly.
+-- Two extra rows with the totals for all on-time orders and all late orders.
 SELECT
     6 + is_late,
     CASE WHEN is_late = 1 THEN 'All late orders' ELSE 'All on-time orders' END,

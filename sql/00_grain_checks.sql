@@ -1,7 +1,6 @@
--- 00. Grain checks behind the comments in queries 01-08.
--- Each row compares a row count (or total) before and after a join or roll-up.
--- passed = 1 means nothing was dropped or double-counted. run_all.sql stops before writing
--- any other output if a check fails.
+-- Checks for the joins in queries 01-08. Each row compares a row count (or a total) before
+-- and after a join or roll-up, and passed = 1 means nothing was dropped or counted twice.
+-- If a check fails, run_all.sql stops before it writes any other output.
 
 WITH delivered AS (
     SELECT order_id, customer_id, order_purchase_timestamp
@@ -88,7 +87,7 @@ checks AS (
            (SELECT COUNT(*) FROM delivered),
            (SELECT COUNT(*) FROM delivered d JOIN order_totals t ON t.order_id = d.order_id)
     UNION ALL
-    -- Query 07 filters on purchase date; a missing timestamp would drop an order silently.
+    -- Query 07 filters on purchase date, so an order with a missing timestamp would quietly drop out.
     SELECT 'every delivered order has a valid purchase timestamp', '07',
            (SELECT COUNT(*) FROM delivered),
            (SELECT COUNT(*) FROM delivered WHERE datetime(order_purchase_timestamp) IS NOT NULL)

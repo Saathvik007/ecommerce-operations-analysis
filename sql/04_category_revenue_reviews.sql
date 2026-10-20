@@ -1,12 +1,9 @@
--- 04. Which product categories bring the most revenue, and how do their reviews compare?
--- Scope: delivered orders with a delivery date. Revenue = item price paid, excluding freight,
--- in Brazilian reais (BRL). This is merchandise value sold through the platform, not the
--- platform's commission income.
--- Grain: order_items (one row per item) is collapsed to one row per order and category
--- before joining reviews, so an order with three items in one category counts once and its
--- review counts once for that category. 780 orders span two or more categories; their
--- review counts toward each one. Revenue still sums to the item-level total
--- (see 00_grain_checks.sql).
+-- Which product categories bring in the most revenue, and how are their reviews?
+-- Revenue = item prices in BRL, without freight. It's the value of the products sold, which
+-- is different from what Olist earns in commission. Items are rolled up to one row per order
+-- and category before joining reviews, so an order with three items in one category only
+-- counts once. 780 orders have items in two or more categories, and their review counts for
+-- each one. Revenue still adds up to the item total (checked in 00_grain_checks.sql).
 
 WITH delivered AS (
     SELECT
@@ -30,8 +27,8 @@ latest_review AS (
 order_categories AS (
     SELECT
         i.order_id,
-        -- Items whose product has no category show as 'unknown' (1,603 items across all
-        -- orders, 00_data_profile.csv; 1,537 of them in delivered orders, this query's output).
+        -- Items with no product category show up as 'unknown'. That's 1,603 items across all
+        -- orders (00_data_profile.csv) and 1,537 in delivered orders (this query's output).
         COALESCE(t.product_category_name_english, 'unknown') AS category,
         COUNT(*) AS items,
         SUM(i.price) AS revenue

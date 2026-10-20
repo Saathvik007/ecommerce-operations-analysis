@@ -1,12 +1,11 @@
--- Tableau extract: delivered orders pre-aggregated to month x state x delay bucket x
--- seller handoff status. Measures are additive (counts and sums), so the dashboard
--- recomputes rates and averages from them, and every filter combination stays correct:
+-- Summary table for the Tableau dashboard. Delivered orders are grouped by month, state,
+-- delay bucket and seller handoff status. I only store counts and sums, so the dashboard
+-- works out the rates and averages itself and they stay right with any filter:
 --   late rate        = SUM(late_orders) / SUM(orders)
 --   avg review score = SUM(review_score_sum) / SUM(reviewed_orders)
--- Definitions match queries 01, 02, 07 and 08. All delivered orders are included; the
--- monthly chart filters to January 2017 - August 2018 like query 07.
--- Grain check: SUM(orders) over the extract = 96,470 delivered orders (run_all.sql
--- checks this).
+-- The definitions are the same as in queries 01, 02, 07 and 08. Every delivered order is in
+-- here, and the monthly chart filters to January 2017 to August 2018 like query 07.
+-- SUM(orders) over the whole extract should be 96,470 delivered orders (run_all.sql checks this).
 
 WITH delivered AS (
     SELECT
@@ -39,7 +38,7 @@ order_totals AS (
     GROUP BY order_id
 ),
 order_rows AS (
-    -- One row per delivered order; every join here is to a one-row-per-order table.
+    -- One row per delivered order. Every table joined here also has one row per order.
     SELECT
         d.purchase_month,
         c.customer_state,

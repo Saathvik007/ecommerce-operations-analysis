@@ -62,7 +62,7 @@ CREATE TABLE order_reviews (
     review_creation_date TEXT,
     review_answer_timestamp TEXT);
 
--- The source spells two columns "lenght"; they are renamed to "length" here.
+-- The source spells two columns "lenght", so I renamed them to "length" here.
 CREATE TABLE products (
     product_id TEXT PRIMARY KEY,
     product_category_name TEXT,

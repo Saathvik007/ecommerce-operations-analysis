@@ -1,5 +1,6 @@
--- 00. Data profile: table sizes and the grain issues the other queries handle.
--- The counts quoted in code comments, the README and data/README.md come from this output.
+-- Table sizes, plus counts of the things that make the joins tricky, like orders with more
+-- than one review or seller. The counts I quote in the comments, the README and
+-- data/README.md come from this output.
 
 WITH delivered AS (
     SELECT order_id

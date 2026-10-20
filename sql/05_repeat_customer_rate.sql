@@ -1,9 +1,5 @@
--- 05. What share of customers order again, and does a late first order change that?
--- Scope: delivered orders with a delivery date. A customer is a customer_unique_id; the
--- source issues a new customer_id for every order, so customer_id cannot identify repeats.
--- Grain: delivered JOIN customers keeps one row per order (96,470). customer_orders then
--- collapses to one row per customer (93,350), and its order counts sum back to 96,470
--- (see 00_grain_checks.sql).
+-- What share of customers order again, and is it different when the first order was late?
+-- I count people by customer_unique_id, since the data gives every order a new customer_id.
 
 WITH delivered AS (
     SELECT

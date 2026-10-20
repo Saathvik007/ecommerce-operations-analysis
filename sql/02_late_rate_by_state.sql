@@ -1,7 +1,4 @@
--- 02. Which customer states have the highest late-delivery rates?
--- Scope: delivered orders with a delivery date (96,470 orders).
--- Grain: one row per order. customers has one row per customer_id (primary key) and
--- latest_review one row per order, so both joins keep 96,470 rows (see 00_grain_checks.sql).
+-- Which customer states get the most late deliveries? Delivered orders, one row per state.
 
 WITH delivered AS (
     SELECT

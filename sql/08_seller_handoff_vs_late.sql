@@ -1,10 +1,5 @@
--- 08. Are late deliveries caused by sellers shipping late or by time in transit?
--- Scope: delivered orders with a delivery date. "Handed over late" = the carrier pickup
--- date is after the seller's shipping deadline. For orders with several items or sellers,
--- the deadline is the latest shipping_limit_date in the order, which gives sellers the
--- benefit of the doubt.
--- Grain: order_deadlines groups order_items by order_id, so it has one row per order (the
--- same grouping as order_totals in 00_grain_checks.sql) and the join keeps 96,470 rows.
+-- Is the delay mostly sellers shipping late, or time in transit? I call an order "handed over
+-- late" when the carrier picked it up after the seller's shipping deadline.
 
 WITH delivered AS (
     SELECT
@@ -19,6 +14,8 @@ WITH delivered AS (
       AND order_delivered_customer_date IS NOT NULL
 ),
 order_deadlines AS (
+    -- If an order has several items or sellers, I use the latest shipping_limit_date in it.
+    -- That gives sellers the benefit of the doubt.
     SELECT order_id, MAX(shipping_limit_date) AS shipping_limit
     FROM order_items
     GROUP BY order_id
