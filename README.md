@@ -35,17 +35,7 @@ Items and reviews can have several rows for one order, so joining them straight 
 
 | Path | What it is |
 |---|---|
-| sql/00_data_profile.sql | Table sizes and orders with several reviews or several sellers |
-| sql/00_grain_checks.sql | Checks that the joins don't add or lose rows |
-| sql/01-08_*.sql | One query per question: review scores, states, sellers, categories, repeat customers, freight, monthly trend, seller handoff |
-| sql/tableau_extract.sql | Summary table for the Tableau dashboard |
-| outputs/*.csv | The saved result of each query, with the same file name |
-| sql/load_data.sql | Loads the raw CSVs into data/olist.db |
-| sql/run_all.sql | Runs every query and saves the results to outputs/, and stops if a grain check fails |
-| outputs/charts.xlsx | The Excel charts, with the data behind each one copied from the CSVs |
-| outputs/*.png | Pictures of those Excel charts |
-| deliverables/operations_memo.pdf, .md | One-page memo with my recommendations |
-
+| [sql/00_data_profile.sql](sql/00_data_profile.sql) | Table sizes and orders with several reviews or several sellers || [sql/00_grain_checks.sql](sql/00_grain_checks.sql) | Checks that the joins don't add or lose rows || [sql/01-08_*.sql](sql/) | One query per question: review scores, states, sellers, categories, repeat customers, freight, monthly trend, seller handoff || [sql/tableau_extract.sql](sql/tableau_extract.sql) | Summary table for the Tableau dashboard || [outputs/*.csv](outputs/) | The saved result of each query, with the same file name || [sql/load_data.sql](sql/load_data.sql) | Loads the raw CSVs into data/olist.db || [sql/run_all.sql](sql/run_all.sql) | Runs every query and saves the results to outputs/, and stops if a grain check fails || [outputs/charts.xlsx](outputs/charts.xlsx) | The Excel charts, with the data behind each one copied from the CSVs || [outputs/*.png](outputs/) | Pictures of those Excel charts || [deliverables/operations_memo.pdf](deliverables/operations_memo.pdf), [.md](deliverables/operations_memo.md) | One-page memo with my recommendations |
 ## How to run it
 
 Everything runs with the sqlite3 command-line tool (it's already on a Mac; on Windows you can get it from sqlite.org). From the project folder:
